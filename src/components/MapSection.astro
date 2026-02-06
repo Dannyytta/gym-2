@@ -1,0 +1,26 @@
+---
+interface Props {
+  heading: string;
+  address: string;
+  directions: {
+    href: string;
+    label: string;
+  };
+  iframe: string;
+}
+
+const { heading, address, directions, iframe } = Astro.props;
+---
+
+<div class="mapa-container">
+  <div class="mapa-overlay" data-aos="fade-in">
+    <div class="overlay-content">
+      <h3>{heading}</h3>
+      <p>{address}</p>
+      <a href={directions.href} target="_blank" class="btn btn-outline">
+        <i class="fas fa-directions"></i> {directions.label}
+      </a>
+    </div>
+  </div>
+  <iframe src={iframe} allowfullscreen="" loading="lazy"></iframe>
+</div>

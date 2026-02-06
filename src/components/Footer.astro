@@ -1,0 +1,96 @@
+---
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface ScheduleItem {
+  label: string;
+  value: string;
+}
+
+interface Branding {
+  highlight: string;
+  name: string;
+  footerDescription: string;
+  copyright: string;
+}
+
+interface FooterProps {
+  branding: Branding;
+  navLinks: NavLink[];
+  newsletterTitle: string;
+  quickLinksTitle: string;
+  scheduleTitle: string;
+  emergencyTitle: string;
+  emergencyPhone: string;
+  emergencyHref: string;
+  schedule: ScheduleItem[];
+  legalLinks: NavLink[];
+}
+
+const {
+  branding,
+  navLinks,
+  newsletterTitle,
+  quickLinksTitle,
+  scheduleTitle,
+  emergencyTitle,
+  emergencyPhone,
+  emergencyHref,
+  schedule,
+  legalLinks,
+} = Astro.props;
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo">
+          <a href="#"><span>{branding.highlight}</span>{branding.name}</a>
+        </div>
+        <p>{branding.footerDescription}</p>
+        <div class="newsletter">
+          <h3>{newsletterTitle}</h3>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Tu correo electrónico" required />
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>{quickLinksTitle}</h3>
+        <ul>
+          {navLinks.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>{scheduleTitle}</h3>
+        <ul class="horario">
+          {schedule.map((item) => (
+            <li>
+              {item.label} <span>{item.value}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="emergencia">
+          <h3>{emergencyTitle}</h3>
+          <a href={emergencyHref} class="emergency-link">
+            <i class="fas fa-phone-alt"></i> {emergencyPhone}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {branding.copyright}</p>
+      <div class="footer-links">
+        {legalLinks.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

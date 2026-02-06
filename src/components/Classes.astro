@@ -1,0 +1,47 @@
+---
+interface ClassItem {
+  image: string;
+  alt: string;
+  name: string;
+  schedule: string;
+  time: string;
+  cta: {
+    href: string;
+    label: string;
+  };
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  highlighted: string;
+  description: string;
+  items: ClassItem[];
+}
+
+const { id = "clases", title, highlighted, description, items } = Astro.props;
+---
+
+<section id={id} class="clases section-padding">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>{title} <span>{highlighted}</span></h2>
+      <p>{description}</p>
+    </div>
+    <div class="clases-grid">
+      {items.map((item, index) => (
+        <div class="clase-card" data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
+          <img src={item.image} alt={item.alt} />
+          <div class="clase-info">
+            <h3>{item.name}</h3>
+            <div class="horario">
+              <span><i class="far fa-clock"></i> {item.schedule}</span>
+              <span>{item.time}</span>
+            </div>
+            <a href={item.cta.href} class="btn btn-small">{item.cta.label}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

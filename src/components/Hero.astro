@@ -1,0 +1,57 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Cta {
+  href: string;
+  label: string;
+  variant: "primary" | "outline";
+}
+
+interface HeroImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  highlighted: string;
+  suffix: string;
+  subtitle: string;
+  stats: Stat[];
+  ctas: Cta[];
+  image: HeroImage;
+}
+
+const { id = "inicio", title, highlighted, suffix, subtitle, stats, ctas, image } = Astro.props;
+---
+
+<section id={id} class="hero">
+  <div class="container">
+    <div class="hero-content" data-aos="fade-right">
+      <h1>{title} <span>{highlighted}</span> {suffix}</h1>
+      <p class="subtitle">{subtitle}</p>
+      <div class="hero-stats">
+        {stats.map((stat) => (
+          <div class="stat-item">
+            <span class="stat-number" data-count={stat.value}>0</span>
+            <span class="stat-text">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+      <div class="hero-buttons">
+        {ctas.map((cta) => (
+          <a href={cta.href} class={`btn btn-${cta.variant}`}>{cta.label}</a>
+        ))}
+      </div>
+    </div>
+    <div class="hero-image" data-aos="fade-left">
+      <img src={image.src} alt={image.alt} />
+      <div class="image-overlay"></div>
+    </div>
+  </div>
+  <div class="hero-red-bar"></div>
+</section>
