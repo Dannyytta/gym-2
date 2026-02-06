@@ -1,0 +1,38 @@
+---
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface Branding {
+  highlight: string;
+  name: string;
+}
+
+interface Props {
+  branding: Branding;
+  links: NavLink[];
+}
+
+const { branding, links } = Astro.props;
+---
+
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a href="#"><span>{branding.highlight}</span>{branding.name}</a>
+    </div>
+    <nav class="navbar">
+      <ul>
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </div>
+</header>

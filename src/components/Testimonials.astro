@@ -1,0 +1,65 @@
+---
+interface Testimonial {
+  rating: number;
+  text: string;
+  image: string;
+  name: string;
+  detail: string;
+}
+
+interface Props {
+  id?: string;
+  tag: string;
+  title: string;
+  highlighted: string;
+  description: string;
+  items: Testimonial[];
+}
+
+const { id = "testimonios", tag, title, highlighted, description, items } = Astro.props;
+
+const renderStars = (rating: number) => {
+  const stars = [];
+  for (let i = 1; i <= 5; i += 1) {
+    if (rating >= i) {
+      stars.push("fas fa-star");
+    } else if (rating >= i - 0.5) {
+      stars.push("fas fa-star-half-alt");
+    } else {
+      stars.push("far fa-star");
+    }
+  }
+  return stars;
+};
+---
+
+<section id={id} class="testimonios section-padding">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <span class="title-tag">{tag}</span>
+      <h2>{title} <span>{highlighted}</span></h2>
+      <p>{description}</p>
+    </div>
+    <div class="testimonios-slider">
+      {items.map((item, index) => (
+        <div class="testimonio-card" data-aos="fade-up" data-aos-delay={(index + 1) * 100}>
+          <div class="testimonio-content">
+            <div class="rating">
+              {renderStars(item.rating).map((icon) => (
+                <i class={icon}></i>
+              ))}
+            </div>
+            <p>"{item.text}"</p>
+            <div class="cliente-info">
+              <img src={item.image} alt={item.name} />
+              <div>
+                <h4>{item.name}</h4>
+                <span>{item.detail}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

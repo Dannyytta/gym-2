@@ -1,0 +1,100 @@
+---
+interface ContactInfo {
+  icon: string;
+  title: string;
+  detail: string;
+  detailSecondary?: string;
+}
+
+interface ContactFormOption {
+  value: string;
+  label: string;
+}
+
+interface ContactForm {
+  options: ContactFormOption[];
+  submitLabel: string;
+}
+
+interface Props {
+  id?: string;
+  tag: string;
+  title: string;
+  highlighted: string;
+  description: string;
+  info: ContactInfo[];
+  social: string[];
+  form: ContactForm;
+}
+
+const { id = "contacto", tag, title, highlighted, description, info, social, form } = Astro.props;
+---
+
+<section id={id} class="contacto section-padding">
+  <div class="container">
+    <div class="contacto-grid">
+      <div class="contacto-info" data-aos="fade-right">
+        <div class="section-title">
+          <span class="title-tag">{tag}</span>
+          <h2>{title} <span>{highlighted}</span></h2>
+          <p>{description}</p>
+        </div>
+        {info.map((item) => (
+          <div class="info-item">
+            <div class="icon">
+              <i class={item.icon}></i>
+            </div>
+            <div class="info-content">
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+              {item.detailSecondary && <p>{item.detailSecondary}</p>}
+            </div>
+          </div>
+        ))}
+        <div class="social-links">
+          {social.map((href, index) => (
+            <a href={href}>
+              <i
+                class={[
+                  "fab fa-facebook-f",
+                  "fab fa-instagram",
+                  "fab fa-twitter",
+                  "fab fa-youtube",
+                ][index]}
+              ></i>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="contacto-form" data-aos="fade-left">
+        <form id="form-contacto">
+          <div class="form-group">
+            <input type="text" placeholder="Nombre completo" required />
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Correo electrónico" required />
+          </div>
+          <div class="form-group">
+            <input type="tel" placeholder="Teléfono" />
+          </div>
+          <div class="form-group">
+            <select required>
+              <option value="" disabled selected>
+                ¿Qué te interesa?
+              </option>
+              {form.options.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Tu mensaje..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            {form.submitLabel} <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
