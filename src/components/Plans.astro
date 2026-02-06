@@ -1,0 +1,69 @@
+---
+interface Feature {
+  label: string;
+  included: boolean;
+}
+
+interface Plan {
+  name: string;
+  price: string;
+  period: string;
+  popular?: boolean;
+  features: Feature[];
+  cta: {
+    href: string;
+    label: string;
+    variant: "primary" | "outline";
+  };
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  highlighted: string;
+  description: string;
+  items: Plan[];
+}
+
+const { id = "planes", title, highlighted, description, items } = Astro.props;
+---
+
+<section id={id} class="planes section-padding">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>{title} <span>{highlighted}</span></h2>
+      <p>{description}</p>
+    </div>
+
+    <div class="planes-grid">
+      {items.map((plan, index) => (
+        <div
+          class={`plan-card${plan.popular ? " popular" : ""}`}
+          data-aos="fade-up"
+          data-aos-delay={(index + 1) * 100}
+        >
+          {plan.popular && <div class="popular-badge">POPULAR</div>}
+          <div class="plan-header">
+            <h3>{plan.name}</h3>
+            <div class="plan-price">
+              <span class="price">{plan.price}</span>
+              <span class="period">{plan.period}</span>
+            </div>
+            <div class="plan-features">
+              <ul>
+                {plan.features.map((feature) => (
+                  <li class={feature.included ? "" : "disabled"}>
+                    <i class={feature.included ? "fas fa-check" : "fas fa-times"}></i> {feature.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div class="plan-footer">
+            <a href={plan.cta.href} class={`btn btn-${plan.cta.variant}`}>{plan.cta.label}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
