@@ -1,3 +1,121 @@
+export type ButtonVariant = "primary" | "outline";
+
+export interface SiteConfig {
+  meta: {
+    title: string;
+  };
+  branding: {
+    highlight: string;
+    name: string;
+    footerDescription: string;
+    copyright: string;
+  };
+  whatsapp: {
+    href: string;
+    label: string;
+  };
+  navigation: Array<{ href: string; label: string }>;
+  hero: {
+    title: string;
+    highlighted: string;
+    suffix: string;
+    subtitle: string;
+    stats: Array<{ value: string; label: string }>;
+    ctas: Array<{ href: string; label: string; variant: ButtonVariant }>;
+    image: { src: string; alt: string };
+  };
+  services: {
+    title: string;
+    highlighted: string;
+    description: string;
+    items: Array<{ icon: string; title: string; description: string }>;
+  };
+  classes: {
+    title: string;
+    highlighted: string;
+    description: string;
+    items: Array<{
+      image: string;
+      alt: string;
+      name: string;
+      schedule: string;
+      time: string;
+      cta: { href: string; label: string };
+    }>;
+  };
+  trainers: {
+    title: string;
+    highlighted: string;
+    description: string;
+    items: Array<{
+      image: string;
+      alt: string;
+      name: string;
+      role: string;
+      social: string[];
+    }>;
+  };
+  plans: {
+    title: string;
+    highlighted: string;
+    description: string;
+    items: Array<{
+      name: string;
+      price: string;
+      period: string;
+      popular?: boolean;
+      features: Array<{ label: string; included: boolean }>;
+      cta: { href: string; label: string; variant: ButtonVariant };
+    }>;
+  };
+  testimonials: {
+    tag: string;
+    title: string;
+    highlighted: string;
+    description: string;
+    items: Array<{
+      rating: number;
+      text: string;
+      image: string;
+      name: string;
+      detail: string;
+    }>;
+  };
+  contact: {
+    tag: string;
+    title: string;
+    highlighted: string;
+    description: string;
+    info: Array<{
+      icon: string;
+      title: string;
+      detail: string;
+      detailSecondary?: string;
+    }>;
+    social: string[];
+    form: {
+      options: Array<{ value: string; label: string }>;
+      submitLabel: string;
+    };
+  };
+  map: {
+    heading: string;
+    address: string;
+    directions: { href: string; label: string };
+    iframe: string;
+  };
+  footer: {
+    newsletterTitle: string;
+    quickLinksTitle: string;
+    scheduleTitle: string;
+    emergencyTitle: string;
+    emergencyPhone: string;
+    emergencyHref: string;
+    schedule: Array<{ label: string; value: string }>;
+    legalLinks: Array<{ href: string; label: string }>;
+  };
+}
+
 export const siteConfig = {
   meta: {
     title: "IronFit Gym - Transforma tu cuerpo",
@@ -298,4 +416,4 @@ export const siteConfig = {
       { href: "#", label: "Política de privacidad" },
     ],
   },
-};
+} as const satisfies SiteConfig;
